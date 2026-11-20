@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.logr-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
+<script>window.LogRocket && window.LogRocket.init('ke04ah/ai-coe');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Kitchen Hub – LogRocket Test Page</title>
+<style>
+  :root{--bg:#fdf8f2;--card:#fff;--ink:#2b2420;--muted:#7a6e66;--accent:#c8501e;--accent2:#2f6f4f;--line:#eadfd3}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  header.hero{background:linear-gradient(135deg,#c8501e,#e8a33d);color:#fff;padding:48px 24px 36px;text-align:center}
+  header.hero h1{margin:0 0 8px;font-size:2.4rem}
+  header.hero p{margin:0;opacity:.95}
+  .tabs{position:sticky;top:0;z-index:20;background:#fff;border-bottom:2px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:0 12px}
+  .tab-btn{border:0;background:none;padding:14px 18px;font-size:1rem;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+  .tab-btn:hover{color:var(--ink)}
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+  main{max-width:1000px;margin:0 auto;padding:24px 16px 80px}
+  .panel{display:none}.panel.active{display:block}
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:28px}
+  section h2{margin-top:0;color:var(--accent)}
+  section h3{margin-bottom:6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+  .card{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fffdfa}
+  .card h4{margin:0 0 6px}
+  .tag{display:inline-block;font-size:.75rem;background:#f3e6d8;border-radius:20px;padding:2px 10px;margin-right:4px}
+  button.btn,.btn{background:var(--accent);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;font-size:.9rem}
+  .btn.alt{background:var(--accent2)}.btn.ghost{background:#eee;color:var(--ink)}
+  input,select,textarea{padding:8px 10px;border:1px solid #d6c8b8;border-radius:8px;font:inherit;max-width:100%}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+  details{border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin:8px 0;background:#fffdfa}
+  summary{cursor:pointer;font-weight:600}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{border-bottom:1px solid var(--line);padding:8px;text-align:left}
+  th{background:#f8efe4}
+  .timer{font-size:2.4rem;font-variant-numeric:tabular-nums;font-weight:700}
+  .stars span{font-size:1.5rem;cursor:pointer;color:#ccc}.stars span.on{color:#e8a33d}
+  ul.check{list-style:none;padding:0}ul.check li{padding:4px 0}
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:50}
+  .modal-bg.open{display:flex}
+  .modal{background:#fff;border-radius:12px;padding:24px;max-width:560px;width:92%;max-height:80vh;overflow:auto}
+  #logpanel{position:fixed;right:12px;bottom:12px;width:340px;max-height:260px;background:#1d1a18;color:#9fe0b0;font:12px/1.4 monospace;border-radius:10px;z-index:40;display:flex;flex-direction:column}
+  #logpanel .bar{padding:6px 10px;background:#33302d;color:#fff;display:flex;justify-content:space-between;cursor:pointer}
+  #logbody{overflow:auto;padding:8px 10px;flex:1}
+  #logpanel.min #logbody{display:none}
+  .status{display:inline-block;padding:2px 10px;border-radius:20px;font-size:.8rem;background:#fde2d6}
+  .status.ok{background:#d6f0e0}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:24px;background:#2b2420;color:#fff;padding:10px 18px;border-radius:8px;z-index:60;opacity:0;transition:.3s;pointer-events:none}
+  .toast.show{opacity:1}
+  .filler{height:180px;background:repeating-linear-gradient(45deg,#f8efe4,#f8efe4 12px,#fff 12px,#fff 24px);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--muted);margin-top:12px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>🍳 The Kitchen Hub</h1>
+  <p>Recipes, techniques, equipment, pantry &amp; planning — one page, many tabs.</p>
+  <p style="margin-top:10px"><span class="status" id="lrStatus">LogRocket: not initialised</span></p>
+</header>
+
+<nav class="tabs" role="tablist" id="tabs">
+  <button class="tab-btn active" data-tab="recipes">Recipes</button>
+  <button class="tab-btn" data-tab="techniques">Techniques</button>
+  <button class="tab-btn" data-tab="equipment">Equipment</button>
+  <button class="tab-btn" data-tab="pantry">Pantry &amp; Ingredients</button>
+  <button class="tab-btn" data-tab="tools">Kitchen Tools</button>
+  <button class="tab-btn" data-tab="planner">Meal Planner</button>
+  <button class="tab-btn" data-tab="safety">Safety &amp; Storage</button>
+  <button class="tab-btn" data-tab="contact">Contact / Feedback</button>
+</nav>
+
+<main>
+
+<!-- ============ RECIPES ============ -->
+<div class="panel active" id="tab-recipes">
+  <section id="recipe-browser">
+    <h2>Recipe Browser</h2>
+    <div class="row">
+      <input type="search" id="recipeSearch" placeholder="Search recipes…" aria-label="Search recipes">
+      <select id="recipeCuisine" aria-label="Cuisine filter">
+        <option value="">All cuisines</option><option>Italian</option><option>Indian</option><option>Mexican</option><option>French</option><option>American</option><option>Japanese</option>
+      </select>
+      <select id="recipeDiet" aria-label="Diet filter">
+        <option value="">Any diet</option><option>vegetarian</option><option>vegan</option><option>gluten-free</option>
+      </select>
+      <span id="recipeCount" class="tag"></span>
+    </div>
+    <div class="grid" id="recipeGrid"></div>
+  </section>
+
+  <section id="recipe-of-day">
+    <h2>Featured: Classic Margherita Pizza</h2>
+    <p>A Neapolitan-style pizza with a blistered crust, bright tomato sauce, creamy mozzarella and fresh basil. The secret is a long, cold ferment and a very hot oven.</p>
+    <h3>Ingredients</h3>
+    <ul class="check" id="pizzaIngredients">
+      <li><label><input type="checkbox"> 500 g bread flour (or 00 flour)</label></li>
+      <li><label><input type="checkbox"> 325 ml lukewarm water</label></li>
+      <li><label><input type="checkbox"> 10 g fine sea salt</label></li>
+      <li><label><input type="checkbox"> 3 g instant yeast</label></li>
+      <li><label><input type="checkbox"> 400 g canned San Marzano tomatoes</label></li>
+      <li><label><input type="checkbox"> 250 g fresh mozzarella</label></li>
+      <li><label><input type="checkbox"> Handful of fresh basil</label></li>
+      <li><label><input type="checkbox"> Extra-virgin olive oil</label></li>
+    </ul>
+    <div class="row"><button class="btn alt" id="addPizzaToList">Add checked to shopping list</button></div>
+    <h3>Method</h3>
+    <ol>
+      <li>Mix flour, water, salt and yeast until no dry flour remains. Rest 30 minutes.</li>
+      <li>Stretch and fold the dough four times over two hours, then refrigerate for 24–48 hours.</li>
+      <li>Divide into four balls and bring to room temperature for 1–2 hours.</li>
+      <li>Crush tomatoes by hand with a pinch of salt. Do not cook the sauce.</li>
+      <li>Preheat oven and a baking steel to the maximum temperature for 45 minutes.</li>
+      <li>Stretch dough, top lightly, and bake 6–8 minutes until leopard-spotted.</li>
+      <li>Finish with basil and a drizzle of olive oil.</li>
+    </ol>
+    <div class="row"><span>Rate this recipe:</span><span class="stars" id="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></span><span id="ratingText"></span></div>
+  </section>
+
+  <section id="breakfast">
+    <h2>Breakfast Ideas</h2>
+    <details><summary>Fluffy Buttermilk Pancakes</summary><p>Whisk 2 cups flour, 2 tbsp sugar, 2 tsp baking powder, ½ tsp baking soda and a pinch of salt. Combine 1¾ cups buttermilk, 2 eggs and 4 tbsp melted butter, then fold gently into the dry mix. Lumps are fine. Cook on a medium griddle until bubbles form, flip once.</p></details>
+    <details><summary>Shakshuka</summary><p>Sauté onion and red pepper in olive oil, add garlic, cumin, paprika and chili. Pour in crushed tomatoes and simmer 10 minutes. Make wells, crack in eggs, cover and cook until whites are set. Finish with feta and parsley.</p></details>
+    <details><summary>Overnight Oats</summary><p>Combine ½ cup rolled oats, ½ cup milk, ¼ cup yogurt, 1 tbsp chia seeds and a drizzle of maple syrup. Refrigerate overnight. Top with fruit and nuts.</p></details>
+    <details><summary>Masala Omelette</summary><p>Beat 3 eggs with chopped onion, tomato, green chili, coriander and turmeric. Cook in ghee over medium heat, fold and serve with toast.</p></details>
+  </section>
+
+  <section id="mains">
+    <h2>Weeknight Mains</h2>
+    <table>
+      <thead><tr><th>Dish</th><th>Time</th><th>Difficulty</th><th>Key ingredient</th></tr></thead>
+      <tbody>
+        <tr><td>Chicken Tikka Masala</td><td>45 min</td><td>Medium</td><td>Yogurt-marinated chicken</td></tr>
+        <tr><td>Spaghetti Aglio e Olio</td><td>20 min</td><td>Easy</td><td>Garlic &amp; chili</td></tr>
+        <tr><td>Beef Tacos</td><td>30 min</td><td>Easy</td><td>Seasoned ground beef</td></tr>
+        <tr><td>Mushroom Risotto</td><td>40 min</td><td>Medium</td><td>Arborio rice</td></tr>
+        <tr><td>Teriyaki Salmon</td><td>25 min</td><td>Easy</td><td>Soy-mirin glaze</td></tr>
+        <tr><td>Coq au Vin</td><td>2 hr</td><td>Hard</td><td>Red wine braise</td></tr>
+        <tr><td>Veggie Stir-fry</td><td>15 min</td><td>Easy</td><td>High-heat wok</td></tr>
+        <tr><td>Beef Bourguignon</td><td>3 hr</td><td>Hard</td><td>Chuck roast</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="desserts">
+    <h2>Desserts &amp; Baking</h2>
+    <div class="grid">
+      <div class="card"><h4>Chocolate Chip Cookies</h4><p>Brown the butter, rest the dough 24 hours, and finish with flaky salt for chewy centres and crisp edges.</p></div>
+      <div class="card"><h4>Crème Brûlée</h4><p>Bake a vanilla custard in a water bath at 150°C until just set, chill, then torch a sugar crust.</p></div>
+      <div class="card"><h4>Tiramisu</h4><p>Layer espresso-soaked ladyfingers with mascarpone-zabaglione cream, chill 6 hours, dust with cocoa.</p></div>
+      <div class="card"><h4>Banana Bread</h4><p>Use very ripe bananas, don't overmix, and bake at 175°C for 55–65 minutes.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TECHNIQUES ============ -->
+<div class="panel" id="tab-techniques">
+  <section>
+    <h2>Knife Skills</h2>
+    <p>A sharp knife is safer than a dull one. Master these cuts and prep becomes faster and more consistent.</p>
+    <table>
+      <thead><tr><th>Cut</th><th>Size</th><th>Used for</th></tr></thead>
+      <tbody>
+        <tr><td>Brunoise</td><td>3 mm dice</td><td>Garnishes, fine sauces</td></tr>
+        <tr><td>Small dice</td><td>6 mm</td><td>Mirepoix, salsas</td></tr>
+        <tr><td>Julienne</td><td>3 × 3 × 50 mm</td><td>Stir-fries, slaws</td></tr>
+        <tr><td>Chiffonade</td><td>Thin ribbons</td><td>Basil, spinach</td></tr>
+        <tr><td>Batonnet</td><td>6 × 6 × 50 mm</td><td>Fries, crudités</td></tr>
+      </tbody>
+    </table>
+    <div class="filler">[ knife skills illustration ]</div>
+  </section>
+  <section>
+    <h2>Cooking Methods</h2>
+    <details open><summary>Sautéing &amp; Searing</summary><p>Use a hot pan and dry food. Don't overcrowd — steam is the enemy of browning. Let proteins release naturally from the pan before flipping.</p></details>
+    <details><summary>Roasting</summary><p>High dry heat (200–230°C) caramelises sugars. Toss vegetables in oil, space them out and flip halfway.</p></details>
+    <details><summary>Braising</summary><p>Sear first, then cook slowly in a partial bath of liquid with a tight lid at 150°C. Tough cuts become tender and sauces gain body.</p></details>
+    <details><summary>Poaching</summary><p>Gently cook in liquid at 70–85°C. Ideal for eggs, fish and chicken breast.</p></details>
+    <details><summary>Steaming</summary><p>Preserves colour, nutrients and delicate textures. Keep water below the food and the lid snug.</p></details>
+    <details><summary>Sous Vide</summary><p>Vacuum-sealed food cooked in a precise water bath. Steak at 54°C yields perfect medium-rare edge to edge; finish with a hard sear.</p></details>
+    <details><summary>Grilling &amp; Smoking</summary><p>Set up two zones: direct for searing, indirect for finishing. Smoke at 107–121°C for brisket and ribs.</p></details>
+  </section>
+  <section>
+    <h2>The Five French Mother Sauces</h2>
+    <div class="grid">
+      <div class="card"><h4>Béchamel</h4><p>Milk thickened with white roux. Base for mac &amp; cheese and lasagne.</p></div>
+      <div class="card"><h4>Velouté</h4><p>Light stock thickened with blond roux. Base for chicken gravies.</p></div>
+      <div class="card"><h4>Espagnole</h4><p>Brown stock, mirepoix and tomato with brown roux; leads to demi-glace.</p></div>
+      <div class="card"><h4>Hollandaise</h4><p>Emulsion of egg yolk and clarified butter with lemon.</p></div>
+      <div class="card"><h4>Tomate</h4><p>Slow-simmered tomato sauce with aromatics and stock.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>Meat Doneness Guide (internal temp)</h2>
+    <table>
+      <thead><tr><th>Protein</th><th>Rare/Medium-rare</th><th>Medium</th><th>Well done / safe</th></tr></thead>
+      <tbody>
+        <tr><td>Beef steak</td><td>52–55°C</td><td>60°C</td><td>71°C</td></tr>
+        <tr><td>Pork chop</td><td>—</td><td>63°C</td><td>71°C</td></tr>
+        <tr><td>Chicken</td><td>—</td><td>—</td><td>74°C</td></tr>
+        <tr><td>Salmon</td><td>46–49°C</td><td>54°C</td><td>63°C</td></tr>
+        <tr><td>Lamb</td><td>52–55°C</td><td>60°C</td><td>71°C</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Baking Science</h2>
+    <p><strong>Gluten</strong> forms when flour proteins meet water and are worked; bread wants lots, cakes want little. <strong>Maillard reaction</strong> begins around 140°C and gives crust its flavour. <strong>Leavening</strong>: baking soda needs acid; baking powder contains its own. <strong>Fat</strong> tenderises by coating gluten strands. <strong>Sugar</strong> attracts moisture and aids browning.</p>
+    <p>Always weigh ingredients. A cup of flour can vary by 30 g depending on how it's scooped, which is the single biggest cause of dry bakes.</p>
+    <div class="filler">[ baking science chart ]</div>
+  </section>
+</div>
+
+<!-- ============ EQUIPMENT ============ -->
+<div class="panel" id="tab-equipment">
+  <section>
+    <h2>Essential Equipment</h2>
+    <div class="row">
+      <button class="btn ghost eq-filter active" data-cat="all">All</button>
+      <button class="btn ghost eq-filter" data-cat="cookware">Cookware</button>
+      <button class="btn ghost eq-filter" data-cat="appliance">Appliances</button>
+      <button class="btn ghost eq-filter" data-cat="hand">Hand tools</button>
+      <button class="btn ghost eq-filter" data-cat="bake">Bakeware</button>
+    </div>
+    <div class="grid" id="eqGrid">
+      <div class="card" data-cat="cookware"><h4>Cast-iron Skillet</h4><span class="tag">cookware</span><p>Incredible heat retention for searing, cornbread and oven-to-table dishes. Season regularly.</p></div>
+      <div class="card" data-cat="cookware"><h4>Stainless Steel Saucepan</h4><span class="tag">cookware</span><p>Non-reactive and ideal for sauces, grains and custards.</p></div>
+      <div class="card" data-cat="cookware"><h4>Dutch Oven</h4><span class="tag">cookware</span><p>Enamelled cast iron for braises, stews, soups and no-knead bread.</p></div>
+      <div class="card" data-cat="cookware"><h4>Carbon Steel Wok</h4><span class="tag">cookware</span><p>Light, fast to heat; gives the smoky “wok hei” flavour.</p></div>
+      <div class="card" data-cat="appliance"><h4>Stand Mixer</h4><span class="tag">appliance</span><p>Kneads dough, whips cream, and mixes batters hands-free.</p></div>
+      <div class="card" data-cat="appliance"><h4>Immersion Blender</h4><span class="tag">appliance</span><p>Purée soups in the pot with minimal cleanup.</p></div>
+      <div class="card" data-cat="appliance"><h4>Pressure Cooker</h4><span class="tag">appliance</span><p>Cuts braise times by two-thirds; great for beans and stock.</p></div>
+      <div class="card" data-cat="appliance"><h4>Air Fryer</h4><span class="tag">appliance</span><p>Compact convection oven for crisp vegetables and reheating.</p></div>
+      <div class="card" data-cat="hand"><h4>Chef's Knife (20 cm)</h4><span class="tag">hand tool</span><p>The one knife you can't live without. Hone often, sharpen twice a year.</p></div>
+      <div class="card" data-cat="hand"><h4>Microplane Zester</h4><span class="tag">hand tool</span><p>Citrus zest, hard cheese, garlic and nutmeg in seconds.</p></div>
+      <div class="card" data-cat="hand"><h4>Instant-read Thermometer</h4><span class="tag">hand tool</span><p>Removes the guesswork from meat, candy and bread.</p></div>
+      <div class="card" data-cat="hand"><h4>Digital Scale</h4><span class="tag">hand tool</span><p>Accuracy to 1 g — essential for baking.</p></div>
+      <div class="card" data-cat="bake"><h4>Half-sheet Pan</h4><span class="tag">bakeware</span><p>Roast vegetables, bake cookies, catch drips.</p></div>
+      <div class="card" data-cat="bake"><h4>Loaf Tin</h4><span class="tag">bakeware</span><p>For sandwich loaves, banana bread and terrines.</p></div>
+      <div class="card" data-cat="bake"><h4>Cooling Rack</h4><span class="tag">bakeware</span><p>Keeps bottoms crisp by letting air circulate.</p></div>
+      <div class="card" data-cat="bake"><h4>Baking Steel</h4><span class="tag">bakeware</span><p>Stores heat for pizza with a leopard-spotted crust.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>Care &amp; Maintenance</h2>
+    <details><summary>Seasoning cast iron</summary><p>Wipe on a micro-thin layer of high smoke-point oil and bake upside-down at 230°C for an hour. Repeat for a slick, non-stick finish.</p></details>
+    <details><summary>Sharpening knives</summary><p>Use a whetstone at a 15–20° angle, starting at 1000 grit and finishing at 3000–6000. Hone on a steel before each use.</p></details>
+    <details><summary>Descaling kettles &amp; coffee machines</summary><p>Run a 1:1 vinegar-water cycle monthly, then two rinse cycles with fresh water.</p></details>
+    <details><summary>Wooden boards</summary><p>Hand-wash only, dry upright, and oil monthly with food-grade mineral oil.</p></details>
+  </section>
+</div>
+
+<!-- ============ PANTRY ============ -->
+<div class="panel" id="tab-pantry">
+  <section>
+    <h2>Pantry Staples</h2>
+    <div class="grid">
+      <div class="card"><h4>Grains &amp; Pasta</h4><p>Basmati rice, arborio, spaghetti, penne, rolled oats, couscous, quinoa, all-purpose and bread flour.</p></div>
+      <div class="card"><h4>Canned &amp; Jarred</h4><p>Whole tomatoes, chickpeas, black beans, coconut milk, tuna, passata, tomato paste, olives.</p></div>
+      <div class="card"><h4>Oils &amp; Vinegars</h4><p>Extra-virgin olive oil, neutral oil, sesame oil, red wine, balsamic and rice vinegar.</p></div>
+      <div class="card"><h4>Baking</h4><p>Sugar (white, brown, icing), baking powder &amp; soda, vanilla, cocoa, chocolate chips, cornstarch.</p></div>
+    </div>
+  </section>
+  <section>
+    <h2>Spice Rack Guide</h2>
+    <table>
+      <thead><tr><th>Spice</th><th>Flavour</th><th>Pairs with</th></tr></thead>
+      <tbody>
+        <tr><td>Cumin</td><td>Earthy, warm</td><td>Chili, lentils, lamb</td></tr>
+        <tr><td>Smoked paprika</td><td>Smoky, sweet</td><td>Chorizo, eggs, potatoes</td></tr>
+        <tr><td>Turmeric</td><td>Earthy, bitter</td><td>Rice, curries, golden milk</td></tr>
+        <tr><td>Coriander seed</td><td>Citrusy</td><td>Curries, pickles</td></tr>
+        <tr><td>Cinnamon</td><td>Sweet, woody</td><td>Baking, tagines</td></tr>
+        <tr><td>Cardamom</td><td>Floral, minty</td><td>Chai, rice pudding</td></tr>
+        <tr><td>Garam masala</td><td>Warm blend</td><td>Finish for Indian dishes</td></tr>
+        <tr><td>Oregano</td><td>Peppery</td><td>Pizza, Greek salad</td></tr>
+        <tr><td>Chili flakes</td><td>Hot</td><td>Pasta, pizza, stir-fry</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Substitutions Cheat Sheet</h2>
+    <details><summary>Buttermilk</summary><p>1 cup milk + 1 tbsp lemon juice or vinegar; rest 5 minutes.</p></details>
+    <details><summary>Egg (vegan)</summary><p>1 tbsp ground flax + 3 tbsp water, or ¼ cup unsweetened applesauce.</p></details>
+    <details><summary>Self-raising flour</summary><p>1 cup plain flour + 1½ tsp baking powder + ¼ tsp salt.</p></details>
+    <details><summary>Fresh herbs → dried</summary><p>Use one third the amount of dried herbs.</p></details>
+    <details><summary>Sour cream</summary><p>Equal parts full-fat Greek yogurt.</p></details>
+    <details><summary>Brown sugar</summary><p>1 cup white sugar + 1 tbsp molasses.</p></details>
+  </section>
+  <section>
+    <h2>Seasonal Produce</h2>
+    <div class="grid">
+      <div class="card"><h4>Spring</h4><p>Asparagus, peas, radishes, rhubarb, spring onions, new potatoes.</p></div>
+      <div class="card"><h4>Summer</h4><p>Tomatoes, corn, zucchini, berries, peaches, basil, cucumbers.</p></div>
+      <div class="card"><h4>Autumn</h4><p>Pumpkin, apples, mushrooms, beets, squash, pears, sage.</p></div>
+      <div class="card"><h4>Winter</h4><p>Citrus, kale, parsnips, leeks, cabbage, Brussels sprouts.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ TOOLS ============ -->
+<div class="panel" id="tab-tools">
+  <section>
+    <h2>Cooking Timer</h2>
+    <div class="timer" id="timerDisplay">00:00</div>
+    <div class="row">
+      <input type="number" id="timerMin" min="0" max="180" value="5" style="width:90px" aria-label="Minutes"> min
+      <button class="btn" id="timerStart">Start</button>
+      <button class="btn ghost" id="timerPause">Pause</button>
+      <button class="btn ghost" id="timerReset">Reset</button>
+      <button class="btn alt timer-preset" data-min="3">Soft egg 3m</button>
+      <button class="btn alt timer-preset" data-min="10">Pasta 10m</button>
+      <button class="btn alt timer-preset" data-min="25">Rice 25m</button>
+    </div>
+  </section>
+  <section>
+    <h2>Unit Converter</h2>
+    <div class="row">
+      <input type="number" id="convVal" value="1" step="any" style="width:110px" aria-label="Value">
+      <select id="convFrom" aria-label="From unit"></select>
+      <span>→</span>
+      <select id="convTo" aria-label="To unit"></select>
+      <button class="btn" id="convGo">Convert</button>
+    </div>
+    <p><strong id="convResult">—</strong></p>
+  </section>
+  <section>
+    <h2>Recipe Scaler</h2>
+    <div class="row">
+      Original servings <input type="number" id="scaleFrom" value="4" min="1" style="width:80px">
+      New servings <input type="number" id="scaleTo" value="6" min="1" style="width:80px">
+      <button class="btn" id="scaleGo">Scale</button>
+    </div>
+    <table id="scaleTable">
+      <thead><tr><th>Ingredient</th><th>Original</th><th>Scaled</th></tr></thead>
+      <tbody>
+        <tr data-q="200" data-u="g"><td>Pasta</td><td>200 g</td><td class="out">—</td></tr>
+        <tr data-q="2" data-u="tbsp"><td>Olive oil</td><td>2 tbsp</td><td class="out">—</td></tr>
+        <tr data-q="3" data-u="cloves"><td>Garlic</td><td>3 cloves</td><td class="out">—</td></tr>
+        <tr data-q="400" data-u="g"><td>Tomatoes</td><td>400 g</td><td class="out">—</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Shopping List</h2>
+    <div class="row">
+      <input type="text" id="shopItem" placeholder="Add item…" aria-label="Shopping item">
+      <button class="btn" id="shopAdd">Add</button>
+      <button class="btn ghost" id="shopClear">Clear</button>
+    </div>
+    <ul class="check" id="shopList"></ul>
+  </section>
+</div>
+
+<!-- ============ PLANNER ============ -->
+<div class="panel" id="tab-planner">
+  <section>
+    <h2>Weekly Meal Planner</h2>
+    <p>Click a cell to assign a meal. Selections persist during the session.</p>
+    <table id="plannerTable">
+      <thead><tr><th>Day</th><th>Breakfast</th><th>Lunch</th><th>Dinner</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <div class="row"><button class="btn" id="plannerRandom">Randomise week</button><button class="btn ghost" id="plannerClear">Clear</button></div>
+  </section>
+  <section>
+    <h2>Batch Cooking Plan</h2>
+    <ol>
+      <li><strong>Sunday:</strong> cook grains (rice, quinoa), roast two trays of vegetables, make a big pot of soup.</li>
+      <li><strong>Prep proteins:</strong> bake chicken thighs, hard-boil a dozen eggs, marinate tofu.</li>
+      <li><strong>Sauces:</strong> a jar of vinaigrette, a pesto, a peanut sauce.</li>
+      <li><strong>Portion:</strong> into labelled containers; freeze half.</li>
+    </ol>
+  </section>
+  <section>
+    <h2>Nutrition Quick Calculator</h2>
+    <div class="row">
+      <input type="number" id="nutW" placeholder="Weight (kg)" style="width:130px">
+      <input type="number" id="nutH" placeholder="Height (cm)" style="width:130px">
+      <input type="number" id="nutA" placeholder="Age" style="width:90px">
+      <select id="nutS"><option value="m">Male</option><option value="f">Female</option></select>
+      <button class="btn" id="nutGo">Estimate daily calories</button>
+    </div>
+    <p id="nutResult"></p>
+    <p style="color:var(--muted);font-size:.85rem">Mifflin-St Jeor × 1.4 activity factor. An estimate only.</p>
+  </section>
+</div>
+
+<!-- ============ SAFETY ============ -->
+<div class="panel" id="tab-safety">
+  <section>
+    <h2>Food Safety Basics</h2>
+    <div class="grid">
+      <div class="card"><h4>Clean</h4><p>Wash hands for 20 seconds, sanitise boards and counters.</p></div>
+      <div class="card"><h4>Separate</h4><p>Keep raw meat away from ready-to-eat foods. Use different boards.</p></div>
+      <div class="card"><h4>Cook</h4><p>Reach safe internal temperatures; verify with a thermometer.</p></div>
+      <div class="card"><h4>Chill</h4><p>Refrigerate within two hours. Keep the fridge at 4°C or below.</p></div>
+    </div>
+    <p style="margin-top:12px"><strong>Danger zone:</strong> bacteria multiply fastest between 5°C and 60°C.</p>
+  </section>
+  <section>
+    <h2>Storage Times</h2>
+    <table>
+      <thead><tr><th>Food</th><th>Fridge</th><th>Freezer</th></tr></thead>
+      <tbody>
+        <tr><td>Cooked leftovers</td><td>3–4 days</td><td>2–3 months</td></tr>
+        <tr><td>Raw chicken</td><td>1–2 days</td><td>9 months</td></tr>
+        <tr><td>Raw ground beef</td><td>1–2 days</td><td>4 months</td></tr>
+        <tr><td>Eggs (in shell)</td><td>3–5 weeks</td><td>—</td></tr>
+        <tr><td>Hard cheese</td><td>1–2 months</td><td>6 months</td></tr>
+        <tr><td>Soup / stock</td><td>3–4 days</td><td>4–6 months</td></tr>
+        <tr><td>Cooked rice</td><td>1 day</td><td>1 month</td></tr>
+      </tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Kitchen Safety Checklist</h2>
+    <ul class="check" id="safetyList">
+      <li><label><input type="checkbox"> Fire extinguisher or blanket within reach</label></li>
+      <li><label><input type="checkbox"> Pot handles turned inward</label></li>
+      <li><label><input type="checkbox"> Knives stored safely and sharp</label></li>
+      <li><label><input type="checkbox"> Smoke alarm tested this month</label></li>
+      <li><label><input type="checkbox"> Fridge temperature at or below 4°C</label></li>
+      <li><label><input type="checkbox"> Allergen labels on stored foods</label></li>
+      <li><label><input type="checkbox"> First-aid kit stocked</label></li>
+    </ul>
+    <p id="safetyScore" class="tag">0 / 7 complete</p>
+  </section>
+  <section>
+    <h2>Common Allergens</h2>
+    <p>Milk, eggs, peanuts, tree nuts, soy, wheat, fish, shellfish and sesame account for the vast majority of reactions. Always read labels and prevent cross-contact with dedicated utensils.</p>
+    <button class="btn" id="openModal">Allergen emergency info</button>
+  </section>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="panel" id="tab-contact">
+  <section>
+    <h2>Send us feedback</h2>
+    <form id="feedbackForm" novalidate>
+      <div class="row"><label>Name <input type="text" id="fbName" required></label></div>
+      <div class="row"><label>Email <input type="email" id="fbEmail" required></label></div>
+      <div class="row"><label>Topic
+        <select id="fbTopic"><option>Recipe request</option><option>Bug report</option><option>General</option></select></label></div>
+      <div class="row"><label>Message<br><textarea id="fbMsg" rows="5" cols="50" required></textarea></label></div>
+      <div class="row"><label><input type="checkbox" id="fbNews"> Subscribe to the newsletter</label></div>
+      <div class="row"><button type="submit" class="btn">Submit</button><span id="fbStatus"></span></div>
+    </form>
+  </section>
+  <section>
+    <h2>LogRocket Test Controls</h2>
+    <p>Use these to exercise the LogRocket integration and verify what lands in your session replay.</p>
+    <div class="row">
+      <button class="btn" id="lrIdentify">Identify test user</button>
+      <button class="btn" id="lrTrack">Track custom event</button>
+      <button class="btn" id="lrLog">console.log / warn / error</button>
+      <button class="btn" id="lrFetch">Fire network requests</button>
+      <button class="btn" id="lrThrow">Throw uncaught error</button>
+      <button class="btn" id="lrReject">Unhandled promise rejection</button>
+      <button class="btn" id="lrSession">Print session URL</button>
+    </div>
+    <div class="filler">[ more scrolling content below ]</div>
+  </section>
+  <section>
+    <h2>About this page</h2>
+    <p>The Kitchen Hub is a long-scrolling, multi-tab test page packed with realistic content, forms, tables, accordions, timers and modals. Every interaction is mirrored to the on-page event log and, when LogRocket is configured, to LogRocket.</p>
+    <div class="filler">[ end of page ]</div>
+  </section>
+</div>
+
+</main>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h3 id="modalTitle">Allergic reaction – what to do</h3>
+    <ol>
+      <li>Stop eating the food immediately.</li>
+      <li>For severe symptoms (difficulty breathing, swelling, dizziness) use an epinephrine auto-injector if prescribed.</li>
+      <li>Call your local emergency number.</li>
+      <li>Lie down with legs raised unless breathing is difficult.</li>
+    </ol>
+    <button class="btn" id="closeModal">Close</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<div id="logpanel"><div class="bar" id="logbar"><span>Event log</span><span id="logToggle">–</span></div><div id="logbody"></div></div>
+
+<!-- ================= LOGROCKET ================= -->
+<script>
+  // Configure here, or open the page with ?lr=ORG/APP  (e.g. index.html?lr=acme/kitchen-test)
+  window.LOGROCKET_APP_ID = new URLSearchParams(location.search).get('lr') || 'YOUR_ORG/YOUR_APP';
+</script>
+<script src="https://cdn.lr-in-prod.com/LogRocket.min.js" crossorigin="anonymous" onerror="window.__lrBlocked=true"></script>
+<script>
+(function(){
+  const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const logBody = $('#logbody');
+
+  /* ---------- LogRocket wrapper ---------- */
+  const LR = window.LogRocket;
+  const lrReady = !!LR && window.LOGROCKET_APP_ID !== 'YOUR_ORG/YOUR_APP';
+  if (lrReady) {
+    LR.init(window.LOGROCKET_APP_ID, {
+      console:{shouldAggregateConsoleErrors:true},
+      network:{requestSanitizer:r=>{ if(r.headers&&r.headers.Authorization) r.headers.Authorization='[redacted]'; return r; }}
+    });
+    $('#lrStatus').textContent='LogRocket: recording ('+window.LOGROCKET_APP_ID+')';
+    $('#lrStatus').classList.add('ok');
+  } else {
+    $('#lrStatus').textContent = window.__lrBlocked ? 'LogRocket: script blocked/unreachable' :
+      (LR ? 'LogRocket: loaded, set app ID via ?lr=ORG/APP' : 'LogRocket: not loaded');
+  }
+  function track(name, props){
+    props = props||{};
+    const line = new Date().toLocaleTimeString()+'  '+name+(Object.keys(props).length?' '+JSON.stringify(props):'');
+    const d=document.createElement('div'); d.textContent=line; logBody.appendChild(d); logBody.scrollTop=logBody.scrollHeight;
+    if (lrReady) { try{ LR.track(name, props); }catch(e){} }
+  }
+  function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+  $('#logbar').onclick=()=>{ $('#logpanel').classList.toggle('min'); $('#logToggle').textContent=$('#logpanel').classList.contains('min')?'+':'–'; };
+  track('page_loaded',{lrReady});
+
+  // sanitise sensitive inputs from recordings
+  $$('#fbEmail,#fbMsg').forEach(el=>el.setAttribute('data-private','true'));
+
+  /* ---------- Tabs ---------- */
+  function showTab(id){
+    $$('.tab-btn').forEach(b=>{const on=b.dataset.tab===id;b.classList.toggle('active',on);b.setAttribute('aria-selected',on);});
+    $$('.panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+id));
+    window.scrollTo({top:0});
+    track('tab_switched',{tab:id}); history.replaceState(null,'','#'+id);
+  }
+  $('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab-btn'); if(b) showTab(b.dataset.tab);});
+  if (location.hash && $('#tab-'+location.hash.slice(1))) showTab(location.hash.slice(1));
+
+  /* ---------- Recipes ---------- */
+  const recipes=[
+    ['Margherita Pizza','Italian','vegetarian','Blistered crust, San Marzano tomatoes, fresh mozzarella.'],
+    ['Spaghetti Carbonara','Italian','','Eggs, pecorino, guanciale and black pepper.'],
+    ['Mushroom Risotto','Italian','vegetarian','Creamy arborio rice with porcini.'],
+    ['Chicken Tikka Masala','Indian','gluten-free','Charred yogurt-marinated chicken in spiced tomato cream.'],
+    ['Chana Masala','Indian','vegan','Chickpeas simmered in tangy onion-tomato gravy.'],
+    ['Palak Paneer','Indian','vegetarian','Spinach purée with cubes of fresh cheese.'],
+    ['Beef Tacos','Mexican','','Seasoned beef, pickled onion, lime and cilantro.'],
+    ['Black Bean Burrito Bowl','Mexican','vegan','Rice, beans, corn salsa and guacamole.'],
+    ['Huevos Rancheros','Mexican','vegetarian','Fried eggs on tortillas with ranchero sauce.'],
+    ['Ratatouille','French','vegan','Slow-cooked Provençal vegetable stew.'],
+    ['Coq au Vin','French','gluten-free','Chicken braised in red wine with lardons.'],
+    ['French Onion Soup','French','vegetarian','Deeply caramelised onions under melted Gruyère.'],
+    ['Smash Burger','American','','Crisp-edged patties, American cheese, pickles.'],
+    ['Mac & Cheese','American','vegetarian','Baked with a crunchy breadcrumb top.'],
+    ['Buttermilk Fried Chicken','American','','Brined overnight, double-dredged and crisp.'],
+    ['Teriyaki Salmon','Japanese','gluten-free','Glazed with soy, mirin and sake.'],
+    ['Miso Soup','Japanese','vegan','Dashi, miso paste, tofu and wakame.'],
+    ['Okonomiyaki','Japanese','','Savoury cabbage pancake with bonito flakes.']
+  ];
+  const grid=$('#recipeGrid');
+  function renderRecipes(){
+    const q=$('#recipeSearch').value.trim().toLowerCase(), c=$('#recipeCuisine').value, d=$('#recipeDiet').value;
+    const list=recipes.filter(r=>(!q||(r[0]+r[3]).toLowerCase().includes(q))&&(!c||r[1]===c)&&(!d||r[2]===d));
+    grid.innerHTML=list.length?list.map((r,i)=>`<div class="card"><h4>${r[0]}</h4><span class="tag">${r[1]}</span>${r[2]?`<span class="tag">${r[2]}</span>`:''}<p>${r[3]}</p><button class="btn recipe-view" data-name="${r[0]}">View</button> <button class="btn ghost recipe-fav" data-name="${r[0]}">♡ Save</button></div>`).join(''):'<p>No recipes match your filters.</p>';
+    $('#recipeCount').textContent=list.length+' recipes';
+  }
+  let st; $('#recipeSearch').addEventListener('input',()=>{renderRecipes();clearTimeout(st);st=setTimeout(()=>track('recipe_search',{q:$('#recipeSearch').value}),600);});
+  $('#recipeCuisine').onchange=()=>{renderRecipes();track('recipe_filter',{cuisine:$('#recipeCuisine').value});};
+  $('#recipeDiet').onchange=()=>{renderRecipes();track('recipe_filter',{diet:$('#recipeDiet').value});};
+  grid.addEventListener('click',e=>{
+    const v=e.target.closest('.recipe-view'), f=e.target.closest('.recipe-fav');
+    if(v){track('recipe_viewed',{name:v.dataset.name});toast('Opened '+v.dataset.name);}
+    if(f){const on=f.textContent.includes('♡');f.textContent=on?'♥ Saved':'♡ Save';track('recipe_favorite',{name:f.dataset.name,saved:on});}
+  });
+  renderRecipes();
+
+  $$('#stars span').forEach((s,i,all)=>s.onclick=()=>{
+    all.forEach((x,j)=>x.classList.toggle('on',j<=i)); $('#ratingText').textContent=(i+1)+' / 5'; track('recipe_rated',{recipe:'margherita',stars:i+1});
+  });
+  $$('details').forEach(d=>d.addEventListener('toggle',()=>track('accordion_toggle',{title:d.querySelector('summary').textContent,open:d.open})));
+
+  /* ---------- Equipment filter ---------- */
+  $$('.eq-filter').forEach(b=>b.onclick=()=>{
+    $$('.eq-filter').forEach(x=>x.classList.toggle('active',x===b));
+    $$('#eqGrid .card').forEach(c=>c.style.display=(b.dataset.cat==='all'||c.dataset.cat===b.dataset.cat)?'':'none');
+    track('equipment_filter',{cat:b.dataset.cat});
+  });
+
+  /* ---------- Timer ---------- */
+  let tLeft=0,tInt=null;
+  const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  function tick(){ if(tLeft<=0){clearInterval(tInt);tInt=null;track('timer_finished');toast('⏰ Timer done!');return;} tLeft--; $('#timerDisplay').textContent=fmt(tLeft); if(tLeft===0)tick(); }
+  function startTimer(m){ clearInterval(tInt); tLeft=Math.round(m*60); $('#timerDisplay').textContent=fmt(tLeft); tInt=setInterval(tick,1000); track('timer_started',{minutes:m}); }
+  $('#timerStart').onclick=()=>startTimer(+$('#timerMin').value||0);
+  $('#timerPause').onclick=()=>{ if(tInt){clearInterval(tInt);tInt=null;track('timer_paused',{left:tLeft});} else if(tLeft>0){tInt=setInterval(tick,1000);track('timer_resumed');} };
+  $('#timerReset').onclick=()=>{clearInterval(tInt);tInt=null;tLeft=0;$('#timerDisplay').textContent='00:00';track('timer_reset');};
+  $$('.timer-preset').forEach(b=>b.onclick=()=>{$('#timerMin').value=b.dataset.min;startTimer(+b.dataset.min);});
+
+  /* ---------- Converter ---------- */
+  const units={ml:1,l:1000,tsp:4.92892,tbsp:14.7868,'fl oz':29.5735,cup:236.588,pint:473.176,g:null};
+  const vol={ml:1,l:1000,tsp:4.92892,tbsp:14.7868,'fl oz':29.5735,cup:236.588,pint:473.176};
+  const mass={g:1,kg:1000,oz:28.3495,lb:453.592};
+  const allUnits=[...Object.keys(vol),...Object.keys(mass),'°C','°F'];
+  ['#convFrom','#convTo'].forEach((s,i)=>{$(s).innerHTML=allUnits.map(u=>`<option>${u}</option>`).join('');});
+  $('#convTo').selectedIndex=3;
+  $('#convGo').onclick=()=>{
+    const v=+$('#convVal').value,f=$('#convFrom').value,t=$('#convTo').value;let r;
+    if(f in vol&&t in vol) r=v*vol[f]/vol[t];
+    else if(f in mass&&t in mass) r=v*mass[f]/mass[t];
+    else if(f==='°C'&&t==='°F') r=v*9/5+32; else if(f==='°F'&&t==='°C') r=(v-32)*5/9;
+    else if(f===t) r=v;
+    $('#convResult').textContent=r===undefined?'Cannot convert between those unit types.':`${v} ${f} = ${(+r.toFixed(3))} ${t}`;
+    track('unit_converted',{from:f,to:t,ok:r!==undefined});
+  };
+
+  /* ---------- Scaler ---------- */
+  $('#scaleGo').onclick=()=>{
+    const a=+$('#scaleFrom').value,b=+$('#scaleTo').value; if(!a||!b) return toast('Enter valid servings');
+    $$('#scaleTable tbody tr').forEach(r=>r.querySelector('.out').textContent=(+(r.dataset.q*b/a).toFixed(2))+' '+r.dataset.u);
+    track('recipe_scaled',{from:a,to:b});
+  };
+
+  /* ---------- Shopping list ---------- */
+  let shop=[];
+  function renderShop(){ $('#shopList').innerHTML=shop.map((s,i)=>`<li><label><input type="checkbox" data-i="${i}" ${s.done?'checked':''}> <span style="${s.done?'text-decoration:line-through':''}">${s.t}</span></label> <button class="btn ghost shop-del" data-i="${i}">✕</button></li>`).join(''); }
+  function addShop(t){ if(!t) return; shop.push({t:t.replace(/</g,'&lt;'),done:false}); renderShop(); }
+  $('#shopAdd').onclick=()=>{const v=$('#shopItem').value.trim(); if(!v) return toast('Type an item first'); addShop(v); track('shopping_add',{item:v}); $('#shopItem').value='';};
+  $('#shopItem').addEventListener('keydown',e=>{if(e.key==='Enter')$('#shopAdd').click();});
+  $('#shopClear').onclick=()=>{shop=[];renderShop();track('shopping_cleared');};
+  $('#shopList').addEventListener('click',e=>{
+    const d=e.target.closest('.shop-del'); if(d){shop.splice(+d.dataset.i,1);renderShop();track('shopping_remove');return;}
+    const c=e.target.closest('input[type=checkbox]'); if(c){shop[+c.dataset.i].done=c.checked;renderShop();track('shopping_toggle',{done:c.checked});}
+  });
+  $('#addPizzaToList').onclick=()=>{
+    const items=$$('#pizzaIngredients input:checked').map(i=>i.parentNode.textContent.trim());
+    if(!items.length) return toast('Check some ingredients first');
+    items.forEach(addShop); track('pizza_to_shopping',{count:items.length}); toast(items.length+' items added'); showTab('tools');
+  };
+
+  /* ---------- Planner ---------- */
+  const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+  const meals={b:['Pancakes','Shakshuka','Overnight oats','Masala omelette','Avocado toast'],l:['Miso soup','Burrito bowl','Caprese sandwich','Chana masala','Greek salad'],d:['Tikka masala','Carbonara','Teriyaki salmon','Beef tacos','Risotto','Ratatouille']};
+  const plan={};
+  const body=$('#plannerTable tbody');
+  function renderPlan(){ body.innerHTML=days.map(d=>`<tr><th>${d}</th>${['b','l','d'].map(k=>`<td class="slot" data-day="${d}" data-k="${k}" style="cursor:pointer">${plan[d+k]||'<em style="color:#aaa">+ add</em>'}</td>`).join('')}</tr>`).join(''); }
+  body.addEventListener('click',e=>{
+    const c=e.target.closest('.slot'); if(!c) return;
+    const opts=meals[c.dataset.k]; const cur=plan[c.dataset.day+c.dataset.k]; const next=opts[(opts.indexOf(cur)+1)%opts.length];
+    plan[c.dataset.day+c.dataset.k]=next; renderPlan(); track('planner_set',{day:c.dataset.day,slot:c.dataset.k,meal:next});
+  });
+  $('#plannerRandom').onclick=()=>{days.forEach(d=>['b','l','d'].forEach(k=>plan[d+k]=meals[k][Math.floor(Math.random()*meals[k].length)]));renderPlan();track('planner_randomised');};
+  $('#plannerClear').onclick=()=>{for(const k in plan)delete plan[k];renderPlan();track('planner_cleared');};
+  renderPlan();
+
+  $('#nutGo').onclick=()=>{
+    const w=+$('#nutW').value,h=+$('#nutH').value,a=+$('#nutA').value,s=$('#nutS').value;
+    if(!(w>0&&h>0&&a>0)){ $('#nutResult').textContent='Please fill in weight, height and age.'; return track('nutrition_invalid'); }
+    const bmr=10*w+6.25*h-5*a+(s==='m'?5:-161);
+    $('#nutResult').textContent=`Estimated maintenance: ${Math.round(bmr*1.4)} kcal/day (BMR ${Math.round(bmr)}).`;
+    track('nutrition_calculated',{sex:s});
+  };
+
+  /* ---------- Safety ---------- */
+  $('#safetyList').addEventListener('change',()=>{
+    const n=$$('#safetyList input:checked').length; $('#safetyScore').textContent=n+' / 7 complete'; track('safety_checklist',{done:n});
+  });
+  const modal=$('#modalBg');
+  $('#openModal').onclick=()=>{modal.classList.add('open');track('modal_opened');};
+  const closeM=()=>{modal.classList.remove('open');track('modal_closed');};
+  $('#closeModal').onclick=closeM; modal.onclick=e=>{if(e.target===modal)closeM();};
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeM();});
+
+  /* ---------- Feedback form ---------- */
+  $('#feedbackForm').addEventListener('submit',e=>{
+    e.preventDefault();
+    const n=$('#fbName').value.trim(),m=$('#fbEmail').value.trim(),msg=$('#fbMsg').value.trim();
+    const ok=n&&/^\S+@\S+\.\S+$/.test(m)&&msg;
+    $('#fbStatus').textContent=ok?'✔ Thanks, '+n+'!':'✖ Please fill in all fields with a valid email.';
+    track('feedback_submitted',{valid:!!ok,topic:$('#fbTopic').value,newsletter:$('#fbNews').checked});
+    if(ok && lrReady) LR.identify(m,{name:n,email:m});
+  });
+
+  /* ---------- Scroll depth ---------- */
+  const marks=new Set();
+  window.addEventListener('scroll',()=>{
+    const p=Math.round(100*(scrollY+innerHeight)/document.documentElement.scrollHeight);
+    [25,50,75,100].forEach(t=>{ if(p>=t&&!marks.has(t+location.hash)){marks.add(t+location.hash);track('scroll_depth',{percent:t,tab:location.hash||'#recipes'});} });
+  },{passive:true});
+
+  /* ---------- LogRocket test controls ---------- */
+  $('#lrIdentify').onclick=()=>{ const u={name:'Test Chef',email:'chef@example.com',plan:'pro'}; if(lrReady)LR.identify('test-user-001',u); track('identify_called',u); toast('Identified test-user-001'); };
+  $('#lrTrack').onclick=()=>{ track('custom_test_event',{source:'button',ts:Date.now()}); toast('Event tracked'); };
+  $('#lrLog').onclick=()=>{ console.log('Test log',{a:1}); console.info('Test info'); console.warn('Test warning'); console.error('Test error'); track('console_logged'); };
+  $('#lrFetch').onclick=async()=>{
+    const urls=['https://jsonplaceholder.typicode.com/posts/1','https://jsonplaceholder.typicode.com/todos/1','https://jsonplaceholder.typicode.com/nonexistent-404'];
+    for(const u of urls){ try{ const r=await fetch(u,{headers:{'X-Test':'1'}}); track('fetch_done',{url:u,status:r.status}); }catch(err){ track('fetch_failed',{url:u,err:String(err)}); } }
+    try{ const x=new XMLHttpRequest(); x.open('POST','https://jsonplaceholder.typicode.com/posts'); x.setRequestHeader('Content-Type','application/json'); x.onload=()=>track('xhr_done',{status:x.status}); x.send(JSON.stringify({title:'kitchen',body:'test'})); }catch(e){}
+  };
+  $('#lrThrow').onclick=()=>{ track('throwing_error'); setTimeout(()=>{ throw new Error('LogRocket test: uncaught error from Kitchen Hub'); },0); };
+  $('#lrReject').onclick=()=>{ track('rejecting_promise'); Promise.reject(new Error('LogRocket test: unhandled rejection')); };
+  $('#lrSession').onclick=()=>{
+    if(!lrReady) return toast('LogRocket not active – set ?lr=ORG/APP');
+    LR.getSessionURL(url=>{ track('session_url',{url}); console.log('Session URL:',url); toast('Session URL logged'); });
+  };
+
+  window.addEventListener('error',e=>track('window_error',{msg:e.message}));
+  window.addEventListener('unhandledrejection',e=>track('unhandled_rejection',{reason:String(e.reason)}));
+  window.addEventListener('beforeunload',()=>track('page_unload'));
+})();
+</script>
+</body>
+</html>
